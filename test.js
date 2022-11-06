@@ -1,11 +1,10 @@
+const fs = require('fs'); //載入檔案模組
 const http = require('http').createServer((req,res)=>{
-    
-    console.log(req.url);
-    
-    res.setHeader("Content-Type","text/html");  //讓網頁可使用html語法
-    res.write("<meta charset='UTF-8'>");  //設置UTF-8編碼，讓中文字可正常顯示
-    res.write('<h1>Hi!客人</h1>');  //加上h1標籤測試效果
-    res.end(); 
+
+    fs.readFile('./index.html',(error,data)=>{
+        error? console.log(error) : res.write(data); //發生錯誤便打印錯誤資料，否則回應檔案。
+        res.end();
+    });
 
 }); 
 
