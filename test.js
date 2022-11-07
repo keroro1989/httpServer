@@ -1,8 +1,24 @@
-const fs = require('fs'); //載入檔案模組
+const fs = require('fs'); 
 const http = require('http').createServer((req,res)=>{
 
-    fs.readFile('./index.html',(error,data)=>{
-        error? console.log(error) : res.write(data); //發生錯誤便打印錯誤資料，否則回應檔案。
+    let path =  './';  //宣告path變數儲存要回應的網頁路徑
+
+//根據請求的網址判斷要回應哪個網頁
+    switch(req.url){
+        case "/":
+            path += 'index.html';
+            break;
+        case "/fish":
+            path += 'cat.html'
+            break;
+        default:
+            path += '404.html';
+            break;
+    };
+    
+//記得修改fs.readFile第一個變數為path
+    fs.readFile(path,(error,data)=>{
+        error? console.log(error) : res.write(data); 
         res.end();
     });
 
